@@ -39,6 +39,10 @@ def create_embedding_matrix(word_index, embedding_dict):
         # update the matrix. if the word is not found,
         # the vector is zeros!
         if word in embedding_dict:
+            """
+            word_index = {"hello": 1, "hi": 0}
+            embedding matrix will contain [[vector of length 300 representing hi], [[vector of length 300 representing hello]]]
+            """
             embedding_matrix[i] = embedding_dict[word]
     # return embedding matrix
     return embedding_matrix
@@ -105,14 +109,6 @@ def run(df, fold):
         valid_dataset, batch_size=config.VALID_BATCH_SIZE, num_workers=2
     )
 
-    valid_dataset = dataset.IMDBDataset(
-        reviews=xtest, targets=valid_df.sentiment.values
-    )
-
-    # create torch dataloader for validation
-    valid_data_loader = torch.utils.data.DataLoader(
-        valid_dataset, batch_size=config.VALID_BATCH_SIZE, num_workers=1
-    )
     print("Loading embeddings")
 
     # load embeddings as shown previously
